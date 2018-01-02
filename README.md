@@ -2,6 +2,6 @@
 A library of pieces of python codes.
 
 List of python tutorials:
-  - collections
+  - collections: collection_tutorial.py
 
 
