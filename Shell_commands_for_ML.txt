@@ -1,0 +1,74 @@
+Shell commands for ML
+#source: https://www.datacamp.com/community/tutorials/shell-commands-data-scientist
+
+#Get the doc about a command: man
+cd "/Users/mathieu.lechine/Dropbox (Optimind Winter)/Python-learning/Input/"
+
+##Count with WC
+how many lines it contains
+wc -l adult.data.txt
+
+#The -l flag tells wc to count the lines. But you can also use wc to count words instead using the -w flag.
+wc -w adult.data.txt
+
+#The wc command can also count the number of files in a directory
+ls -l . | wc -l
+
+head -n 3 adult.data.txt
+
+
+##Concatenate files with CAT
+#The cat command prints a file's content to the standard output (aka your terminal)
+
+echo "age,workclass,fnlwgt,education,education-num,marital-status,occupation,relationship,race,sex,capital-gain,capital-loss,native-country,class" > header.csv
+#Doubling the symbol >> will append the new content to an already existing file without erasing its content.
+cat header.csv adult.data.txt > adult.csv
+
+##Modify a file with sed
+#count lines with at least one column with a missing value denoted by ?
+grep ", ?," adult.csv | wc -l
+#The following command will replace all the columns with ? by an empty string.
+sed "s/, ?,/,,/g" adult.csv >  adult.csv
+
+##Subset a large file: head and tail
+#extract 20 lines starting at line 100
+head -n 120 adult.csv | tail -n 20 > adult_sample.csv
+
+
+##Finding duplicates with uniq and sort
+#uniq -c: which adds the repetition count to each line;
+#uniq -d: which only outputs duplicate lines; And
+#uniq -u: which only outputs unique lines.
+sort adult.csv | uniq -d | wc -l
+
+
+##Selecting columns with cut
+#cut takes two main flags: -d to specify the column delimiter and -f to specify the columns you want to work on. In the following example, you use cut to find the number of unique values taken by the categorical variable workclass (column 2).
+
+cut -d "," -f 2 adult.csv | sort | uniq -c
+
+##Looping
+replace_source=' '
+replace_target='_'
+for filename in ./*.csv; do
+    new_filename=${filename//$replace_source/$replace_target}
+    mv "$filename" "$new_filename"
+done
+
+##Variables
+varname='Hello world'
+varname=123.4
+#Note that there is no space around the '=' sign. var = '<a string>' would not work. To return the variable value, simply echo it:
+
+
+
+
+
+
+
+
+
+
+
+
+
